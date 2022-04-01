@@ -1,0 +1,12 @@
+---
+vars:
+  region: "%{hiera('region')}"
+
+  users: "%{hiera('users')}"
+  groups: "%{hiera('groups')}"
+
+backend_config:
+  bucket: "%{hiera('access_control_state_bucket_name')}"
+  key: "%{hiera('access_control_state_key')}"
+  region: "%{hiera('access_control_state_bucket_region')}"
+  encrypt: "%{hiera('access_control_state_bucket_is_encrypted')}"

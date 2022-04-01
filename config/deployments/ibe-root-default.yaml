@@ -1,0 +1,58 @@
+---
+# General
+users:
+  - name: "jonas@go-atomic.io"
+    password_length: "%{hiera('minimum_password_length')}"
+
+    public_gpg_key_path: "%{cwd}/config/gpg/jonas_svalin.gpgkey"
+
+    enabled: "yes"
+
+    enforce_mfa: "yes"
+    include_login_profile: "yes"
+    include_access_key: "yes"
+
+  - name: "toby@go-atomic.io"
+    password_length: "%{hiera('minimum_password_length')}"
+
+    public_gpg_key_path: "%{cwd}/config/gpg/toby_clemson.gpgkey"
+
+    enabled: "yes"
+
+    enforce_mfa: "yes"
+    include_login_profile: "yes"
+    include_access_key: "yes"
+
+groups:
+  - name: "developers"
+    users:
+      - "jonas@go-atomic.io"
+      - "toby@go-atomic.io"
+    policies:
+      - "arn:aws:iam::%{hiera('ibe_root_account_id')}:policy/bill-reporting"
+      - "arn:aws:iam::%{hiera('ibe_root_account_id')}:policy/bill-payment-management"
+    assumable_roles:
+      # admin
+      - "arn:aws:iam::%{hiera('ibe_root_account_id')}:role/cross-account-admin-role"
+      - "arn:aws:iam::%{hiera('ibe_parent_account_id')}:role/cross-account-admin-role"
+      - "arn:aws:iam::%{hiera('ibe_management_account_id')}:role/cross-account-admin-role"
+      - "arn:aws:iam::%{hiera('ibe_development_molybdenum_account_id')}:role/cross-account-admin-role"
+      - "arn:aws:iam::%{hiera('ibe_production_holmium_account_id')}:role/cross-account-admin-role"
+
+      # read-only
+      - "arn:aws:iam::%{hiera('ibe_root_account_id')}:role/cross-account-read-only-role"
+      - "arn:aws:iam::%{hiera('ibe_parent_account_id')}:role/cross-account-read-only-role"
+      - "arn:aws:iam::%{hiera('ibe_management_account_id')}:role/cross-account-read-only-role"
+      - "arn:aws:iam::%{hiera('ibe_development_molybdenum_account_id')}:role/cross-account-read-only-role"
+      - "arn:aws:iam::%{hiera('ibe_production_holmium_account_id')}:role/cross-account-read-only-role"
+
+# State
+policies_state_bucket_name: "%{hiera('storage_bucket_name')}"
+policies_state_key: "policies/deployment-state/default.tfstate"
+policies_state_bucket_region: "%{hiera('region')}"
+policies_state_bucket_is_encrypted: "true"
+
+access_control_state_bucket_name: "%{hiera('storage_bucket_name')}"
+access_control_state_key: "access-control/deployment-state/default.tfstate"
+access_control_state_bucket_region: "%{hiera('region')}"
+access_control_state_bucket_is_encrypted: "true"

@@ -1,0 +1,9 @@
+---
+vars:
+  region: "%{hiera('region')}"
+
+backend_config:
+  bucket: "%{hiera('policies_state_bucket_name')}"
+  key: "%{hiera('policies_state_key')}"
+  region: "%{hiera('policies_state_bucket_region')}"
+  encrypt: "%{hiera('policies_state_bucket_is_encrypted')}"

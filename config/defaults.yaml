@@ -1,0 +1,19 @@
+---
+# General
+region: "eu-west-2"
+
+development_group: "ibe"
+
+component: "aws-root-account"
+deployment_identifier: "%{deployment_group}-%{deployment_type}-%{deployment_label}"
+
+storage_bucket_name: "%{hiera('development_group')}-%{hiera('component')}-%{hiera('deployment_identifier')}"
+storage_bucket_encryption: "AES256"
+
+minimum_password_length: 32
+
+ibe_root_account_id: "111005169881"
+ibe_parent_account_id: "678242087257"
+ibe_management_account_id: "939041519219"
+ibe_development_molybdenum_account_id: "086744734665"
+ibe_production_holmium_account_id: "413507235430"
