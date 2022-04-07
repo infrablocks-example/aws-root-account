@@ -20,5 +20,3 @@ variable "groups" {
     assumable_roles = list(string)
   }))
 }
-
-variable "ci_user_public_gpg_key_path" {}
